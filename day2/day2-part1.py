@@ -1,38 +1,31 @@
-def factorize(n):
-    print('factorz.')
-    factors=[]
-    while n > 1:
-        for i in range(2, n + 1):
-            if n % i == 0:
-                n //= i
-                factors.append(i)
-                break
-    return factors
-
 def main():
-    f=open('test.txt', 'rt')
+    f=open('input.txt', 'rt')
 
     list = f.read().split(',')
 
+    total=0
     for l in list:
         item = l.rstrip().split('-')
         item_bottom = int(item[0])
         item_top = int(item[1])
         
-        print(f'>>> {item}\t{item_top}\t{item_bottom}')
+        # print(f'>>> {item}\t{item_top}\t{item_bottom}')
 
-        item_length=0
 
         for i in range(item_bottom, item_top+1):
             if len(str(i))%2 != 0:
-                print(f'{i}: pass')
+                pass
+                # print(f'{i}: pass')
             else:
-                if len(str(i)) != item_length:
-                    item_length=len(str(i))
-                    fact=factorize(item_length)
-                
-                # if item_length%2 == 0:
-                print(f'{i}: {fact}')
+                i_s = str(i)
+                item_left, item_right = i_s[:len(i_s)//2], i_s[len(i_s)//2:]
+
+                if item_left == item_right:
+                    total+=i
+                    # print(f'{i}: {item_left} {item_right}')
+                    
+        
+    print(f'Total: {total}')
 
     f.close()
 

@@ -32,5 +32,8 @@ def main():
     print(f'Result: {password}')
 
 if __name__ == '__main__':
+    """
+    https://adventofcode.com/2025/day/1
+    """
     main()
 
