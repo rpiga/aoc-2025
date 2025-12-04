@@ -1,15 +1,13 @@
-def factorize(n):
-    factors=[]
-    while n > 1:
-        for i in range(2, n + 1):
-            if n % i == 0:
-                n //= i
-                factors.append(i)
-                break
-    return set(factors)
+def divisors(n):
+    v=[]
+    for i in range(2, (n//2)+1):
+        if n % i == 0:
+            v.append(i)
+    return v
+
 
 def main():
-    f=open('test2.txt', 'rt')
+    f=open('test.txt', 'rt')
 
     list = f.read().split(',')
 
@@ -24,44 +22,18 @@ def main():
 
             # Verify if all digits are the same
             i_list = [ int(n) for n in i_s ]
-            if len(set(i_list)) == 1:
-                print(i)
+            if len(i_s) > 1 and len(set(i_list)) == 1:
+                #print(f'{i}')
                 total+=i
-            elif len(i_s)  in [3, 7, 11, 13]:
-                pass
             else:
-                fact = factorize(len(i_s))
-                for j in fact:
-                    slices=[ i_s[k:k+j] for k in range(0, len(i_s), j) ]
-
-                    print(f'>> {i}\t\t{j}\t\t{slices}')
-                    # if len(slices) > 1 and len(set(slices)) == 1:
-
-            # for j in [i_list]:           
-            #     if len(set(j)) == 1:
-            #         total+=i
-            #         break
-            #     else:
-            #         continue
-            # print(f'>> {i_s}')
-
-                    # print(f'>> {i}\t\t{len(i_list)}:{j[0]}:{sum(i_list)}')
-                # elif len(j) in [3, 7, 11, 13]:
-                #     break
-                # else:
-                #     fact = factorize(len(j))
-                #     # print(f'>> {i}\t\t{j}\t\t{fact}')
-                #     slices = []
-                #     for k in fact:
-                #         slices = [ str(i)[ia:ia+1] for ia in range(0, len(i_s), k) ]
-                #         print(f'{i}\t\t{k}\t\t{slices}')
-                    #     slices = []
-                    #     parts.append(j[k:k+fact])
-                    # print(f'>> {i}\t\t{parts}')
-                        
-
-
-                    
+                divs = divisors(len(i_s))
+                slices=[]
+                for d in divs:
+                    slices = [ i_s[k:k+d] for k in range(0, len(i_s), d) ]
+                    if len(set(slices)) == 1:
+                        #print(f'{i}\t{len(i_s)}\t{slices}')
+                        total+=i
+                        break                 
         
     print(f'Total: {total}')
 
