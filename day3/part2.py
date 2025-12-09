@@ -4,16 +4,15 @@ def main():
 
     banks=f.read().splitlines()
     total = 0
+    digits = 12
 
     for line in banks:
-        batteries=[n for n in line]
+        batteries=[int(n) for n in line]
         # print(batteries)
         high=0
 
-        for i in range(0, len(batteries)):
-            for j in range(1+i, len(batteries)):
-                temp = int(batteries[i])*10 + int(batteries[j])
-                high = temp if temp > high else high
+        max1 = max(batteries[0:len(batteries)-digits])
+        idx(max1) = batteries
         
         # print(high)
         total += high

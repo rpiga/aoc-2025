@@ -10,7 +10,7 @@ def mainv2():
         batteries=[int(n) for n in line]
 
         item_max = max(batteries[0:len(batteries)-1])
-        idx_item_max = batteries.index(item_max)
+        idx_item_max = batteries[0:len(batteries)-1].index(item_max)
         
         item_low = max(batteries[idx_item_max+1:len(batteries)])
         
