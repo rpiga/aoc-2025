@@ -2,7 +2,7 @@ def mainv2():
     print("Hello v2.")
     f=open('input.txt', 'rt')
 
-    banks=f.read().splitlines()
+    banks = f.read().splitlines()
     total = 0
 
     for line in banks:
