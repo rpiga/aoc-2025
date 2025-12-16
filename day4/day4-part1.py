@@ -30,6 +30,29 @@ Note: Adjacent = surrounding
 
 def main():
     print("Hello, day 4.")
+    f = open('test.txt', 'rt')
+    total = 0
+    
+    rolls = f.read().splitlines()
+    LENGTH = len(rolls[0])
+    check_matrix=[[-LENGTH-1, -LENGTH, -LENGTH+1],[-1,0,1],[LENGTH-1,LENGTH,LENGTH+1]]
+
+    for line in range(len(rolls)):
+        line_bool = list( map(lambda x: True if x=='@' else False , rolls[line]) )
+        print(f'> {line} {line_bool}')
+        
+        for roll in range(len(line_bool)):
+            if line_bool[roll]:
+                a,b = [ (i, v+roll)  for i,v in enumerate(check_matrix) ]
+                print(f'>> {roll} {a}{b}')
+
+
+    print(f'Total: {total}')
+    f.close()
+
+
+def main_old():
+    print("Hello, day 4.")
     
     f = open('test.txt', 'rt')
     
