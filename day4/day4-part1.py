@@ -30,59 +30,47 @@ Note: Adjacent = surrounding
 
 def main():
     print("Hello, day 4.")
-    f = open('test.txt', 'rt')
+    f = open('input.txt', 'rt')
     total = 0
     
     rolls = f.read().splitlines()
-    LENGTH = len(rolls[0])
-    check_matrix=[[-LENGTH-1, -LENGTH, -LENGTH+1],[-1,0,1],[LENGTH-1,LENGTH,LENGTH+1]]
 
-    for line in range(len(rolls)):
-        line_bool = list( map(lambda x: True if x=='@' else False , rolls[line]) )
-        print(f'> {line} {line_bool}')
+    # Convert to boolean
+    rolls_bool = []
+    for i in range(len(rolls)):
+        rolls_bool.append(list( map(lambda x: True if x=='@' else False , rolls[i]) ))
+
+    # print(rolls)
+    # print(rolls_bool)
+
+    for i, v in enumerate(rolls_bool):
+        # print(f'> {i} {v}')
         
-        for roll in range(len(line_bool)):
-            if line_bool[roll]:
-                a,b = [ (i, v+roll)  for i,v in enumerate(check_matrix) ]
-                print(f'>> {roll} {a}{b}')
-
+        for j, w in enumerate(v):
+            if w:
+                if i == 0:
+                    test = [
+                    False, False, False,
+                    rolls_bool[i][j-1] if j > 0 else False, False,  rolls_bool[i][j+1] if j < len(v)-1 else False,
+                    rolls_bool[i+1][j-1] if j > 0 else False, rolls_bool[i+1][j],  rolls_bool[i+1][j+1] if j < len(v)-1 else False,
+                    ]
+                elif i > 0 and i < len(rolls_bool) - 1:
+                    test = [
+                    rolls_bool[i-1][j-1] if j > 0 else False, rolls_bool[i-1][j],  rolls_bool[i-1][j+1] if j < len(v)-1 else False,
+                    rolls_bool[i][j-1] if j > 0 else False, False,  rolls_bool[i][j+1] if j < len(v)-1 else False,
+                    rolls_bool[i+1][j-1] if j > 0 else False, rolls_bool[i+1][j],  rolls_bool[i+1][j+1] if j < len(v)-1 else False,
+                    ]
+                else:
+                    test = [
+                    rolls_bool[i-1][j-1] if j > 0 else False, rolls_bool[i-1][j],  rolls_bool[i-1][j+1] if j < len(v)-1 else False,
+                    rolls_bool[i][j-1] if j > 0 else False, False,  rolls_bool[i][j+1] if j < len(v)-1 else False,
+                    False, False, False,
+                    ]
+                total += 1 if sum(test) < 4 else 0
 
     print(f'Total: {total}')
     f.close()
 
-
-def main_old():
-    print("Hello, day 4.")
-    
-    f = open('test.txt', 'rt')
-    
-    rolls = f.read().splitlines()
-    LENGTH = len(rolls[0])
-    check_matrix=[-LENGTH-1, -LENGTH, -LENGTH+1,-1,1,LENGTH-1,LENGTH,LENGTH+1]
-
-    rolls_line = ''.join(rolls)
-    rolls_bool = list( map(lambda x: True if x=='@' else False , rolls_line) )
-
-    total = 0
-
-    for i in range(len(rolls_bool[:30])):
-        print(i, rolls_bool[i])
-        if rolls_bool[i]:
-            c = 0
-            for j in check_matrix:
-                print(f'> {i}, {j} {i+j}:{rolls_bool[i+j]}')
-                if i+j >= 0 and i+j < len(rolls_line)-LENGTH:
-                    c += 1 if rolls_bool[i+j] else 0
-            if c < 4:
-                total += 1 
-                print(f'{i}: {total}')
-
-    print(rolls_line)
-    print(rolls_bool)
-    
-    print(f'Total: {total}')
-    f.close()
-    
 if __name__ == "__main__":
     """
     https://adventofcode.com/2025/day/4
